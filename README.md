@@ -27,15 +27,17 @@ D&G-Project/
 │
 ├── README.md
 │
-├── /data
-│   ├── raw/
-│   └── processed/
+├── 
 │
-├── /notebooks
-│   └── DL-24f2002314-notebook-t22026.ipynb
+├── DL-24f2002314-notebook-t22026.ipynb
+│ 
 │
-├── /scripts
-│   └── utils.py
+├── /milestones
+│    └── milestone1.ipynb
+│    └── milestone2.ipynb
+│    └── milestone3.ipynb
+│    └── milestone4.ipynb
+│    └── milestone5.ipynb
 │
 └── /models
     └── saved_models/
