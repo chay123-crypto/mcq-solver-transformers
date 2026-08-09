@@ -1,4 +1,4 @@
-git-lfs>=2.13.0
+git-lfs
 transformers>=4.30.0
 safetensors>=0.3.1
 torch>=2.0.0
