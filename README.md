@@ -30,7 +30,8 @@ D&G-Project/
 ├── 
 │
 ├── DL-24f2002314-notebook-t22026.ipynb
-│ 
+│
+|── app.py
 │
 ├── /milestones
 │    └── milestone1.ipynb
@@ -44,7 +45,10 @@ D&G-Project/
     └──Roberta-Best-Model
 
 ```
+#### Deployment
 
+Deployment done via Streamlit.
+link: 
 ---
 
 ## Technologies
@@ -53,6 +57,7 @@ D&G-Project/
 - TensorFlow / PyTorch
 - Jupyter Notebook
 - NumPy, Pandas, Matplotlib
+- Streamlit (Deployment)
 
 ---
 
