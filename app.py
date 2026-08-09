@@ -1,8 +1,17 @@
 import streamlit as st
 from transformers import AutoTokenizer, AutoModelForMultipleChoice
 import torch
+import subprocess
+import os
 
 st.set_page_config(page_title="D&G PROJECT MCQ SOLVER",layout="centered")
+
+@st.cache_resource
+def setup_lfs():
+    if not os.path.exists('.git/lfs'):
+        subprocess.run(['git', 'lfs', 'install'], capture_output=True)
+        subprocess.run(['git', 'lfs', 'pull'], capture_output=True
+                       
 MODEL_PATH ='models/Electra-best-model/Electra-best-model/electra-base-checkpoint500'
 LABELS = ["Option A", "Option B", "Option C", "Option D", "Option E"]
 
