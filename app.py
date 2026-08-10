@@ -1,12 +1,26 @@
 import os
 import subprocess
+import sys
 
 if os.path.exists('/mount/src'):
-    subprocess.run(["curl", "-s", "https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh", "-o", "/tmp/lfs.sh"], capture_output=True)
-    subprocess.run(["bash", "/tmp/lfs.sh"], capture_output=True)
-    subprocess.run(["apt-get", "install", "-y", "git-lfs"], capture_output=True)
-    subprocess.run(["git", "lfs", "install"], cwd="/mount/src/dl-24f2002314-notebook-t22026")
-    subprocess.run(["git", "lfs", "pull"], cwd="/mount/src/dl-24f2002314-notebook-t22026")
+    repo = "/mount/src/dl-24f2002314-notebook-t22026"
+    
+    subprocess.run([
+        "curl", "-sL",
+        "https://github.com/git-lfs/git-lfs/releases/download/v3.6.1/git-lfs-linux-amd64-v3.6.1.tar.gz",
+        "-o", "/tmp/git-lfs.tar.gz"
+    ])
+    subprocess.run(["tar", "-xzf", "/tmp/git-lfs.tar.gz", "-C", "/tmp/"])
+    subprocess.run(["bash", "/tmp/git-lfs-3.6.1/install.sh"])
+    
+    r1 = subprocess.run(["git", "lfs", "install"], cwd=repo, capture_output=True, text=True)
+    print("git lfs install:", r1.returncode, r1.stderr)
+    
+    r2 = subprocess.run(["git", "lfs", "pull"], cwd=repo, capture_output=True, text=True)
+    print("git lfs pull:", r2.returncode, r2.stderr)
+    
+    sys.stdout.flush()
+
 
 import streamlit as st
 from transformers import AutoTokenizer, AutoModelForMultipleChoice
