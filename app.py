@@ -11,16 +11,17 @@ if os.path.exists('/mount/src'):
         "-o", "/tmp/git-lfs.tar.gz"
     ])
     subprocess.run(["tar", "-xzf", "/tmp/git-lfs.tar.gz", "-C", "/tmp/"])
-    subprocess.run(["bash", "/tmp/git-lfs-3.6.1/install.sh"])
     
-    r1 = subprocess.run(["git", "lfs", "install"], cwd=repo, capture_output=True, text=True)
+    subprocess.run(["cp", "/tmp/git-lfs-3.6.1/git-lfs", "/home/adminuser/venv/bin/git-lfs"])
+    subprocess.run(["chmod", "+x", "/home/adminuser/venv/bin/git-lfs"])
+    
+    r1 = subprocess.run(["git", "lfs", "install", "--local"], cwd=repo, capture_output=True, text=True)
     print("git lfs install:", r1.returncode, r1.stderr)
     
     r2 = subprocess.run(["git", "lfs", "pull"], cwd=repo, capture_output=True, text=True)
     print("git lfs pull:", r2.returncode, r2.stderr)
     
     sys.stdout.flush()
-
 
 import streamlit as st
 from transformers import AutoTokenizer, AutoModelForMultipleChoice
