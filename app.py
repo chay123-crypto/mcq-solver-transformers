@@ -1,23 +1,9 @@
 import os
 import subprocess
 
-print("🔍 Checking LFS status...")
-result = subprocess.run(['git', 'lfs', 'ls-files'], capture_output=True, text=True)
-print(f"LFS tracked files: {result.stdout}")
-
-# Try to pull
-pull_result = subprocess.run(['git', 'lfs', 'pull', '--all'], capture_output=True, text=True)
-print(f"LFS pull stdout: {pull_result.stdout}")
-print(f"LFS pull stderr: {pull_result.stderr}")
-
-# Check if files exist and their size
-model_path = 'models/Electra-best-model/Electra-best-model/electra-base-checkpoint500'
-for file in os.listdir(model_path):
-    filepath = os.path.join(model_path, file)
-    size = os.path.getsize(filepath)
-    print(f"{file}: {size} bytes")
-    if size < 1000:  # Likely a pointer file
-        print(f"  ⚠️ {file} is probably a LFS pointer, not actual file!")
+if os.path.exists('/mount/src'):
+    subprocess.run(["git", "lfs", "install"], cwd="/mount/src/dl-24f2002314-notebook-t22026")
+    subprocess.run(["git", "lfs", "pull"], cwd="/mount/src/dl-24f2002314-notebook-t22026")
 
 import streamlit as st
 from transformers import AutoTokenizer, AutoModelForMultipleChoice
