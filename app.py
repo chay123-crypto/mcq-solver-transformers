@@ -58,6 +58,7 @@ if st.button("Solve"):
             top3_results=[(LABELS[idx] if idx<len(LABELS) else f"Class {idx}",prob) for idx,prob in zip(top3_indices.tolist(),top3_probs.tolist())]
             predicted_label,conf=top3_results[0]
 
+        st.write("Best Model Used : Electra-Base-Discriminator")
         st.success(f"**Predicted Correct Answer:** {predicted_label} \n**Confidence:** {conf:.2%}")
         st.subheader("Top 3 Predictions")
         for i,(label,confidence) in enumerate(top3_results,start=1):
