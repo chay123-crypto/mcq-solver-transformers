@@ -1,71 +1,14 @@
-import os
-import subprocess
-import sys
-
-# Download and setup git-lfs binary
-if os.path.exists('/mount/src'):
-    repo_path = "/mount/src/dl-24f2002314-notebook-t22026"
-    lfs_dir = "/tmp/git-lfs-3.6.1"
-    lfs_bin = os.path.join(lfs_dir, "git-lfs")
-    
-    # Download git-lfs if not already there
-    if not os.path.exists(lfs_bin):
-        print("📥 Downloading git-lfs...")
-        subprocess.run([
-            "curl", "-sL", 
-            "https://github.com/git-lfs/git-lfs/releases/download/v3.6.1/git-lfs-linux-amd64-v3.6.1.tar.gz",
-            "-o", "/tmp/git-lfs.tar.gz"
-        ])
-        subprocess.run(["tar", "-xzf", "/tmp/git-lfs.tar.gz", "-C", "/tmp/"])
-        os.chmod(lfs_bin, 0o755)
-    
-    # Use absolute path to git-lfs
-    git_lfs_path = os.path.join(lfs_dir, "git-lfs")
-    
-    # Setup git-lfs
-    print("🔧 Setting up git-lfs...")
-    subprocess.run([git_lfs_path, "install", "--local"], cwd=repo_path)
-    
-    # Pull LFS files
-    print("⬇️ Pulling LFS files...")
-    result = subprocess.run(
-        [git_lfs_path, "pull"],
-        cwd=repo_path,
-        capture_output=True,
-        text=True,
-        timeout=300  # 5 min timeout
-    )
-    print(f"Return code: {result.returncode}")
-    print(f"Output: {result.stdout}")
-    if result.stderr:
-        print(f"Errors: {result.stderr}")
-    
-    # Verify files are actually pulled
-    model_path = os.path.join(repo_path, 'models/Electra-best-model/Electra-best-model/electra-base-checkpoint500')
-    model_file = os.path.join(model_path, 'model.safetensors')
-    
-    if os.path.exists(model_file):
-        size = os.path.getsize(model_file)
-        print(f"✅ model.safetensors: {size / 1_000_000:.1f} MB")
-        if size < 1_000_000:
-            print("⚠️ WARNING: Still a pointer file!")
-    else:
-        print("❌ model.safetensors not found")
-    
-    sys.stdout.flush()
-
-
 import streamlit as st
 from transformers import AutoTokenizer, AutoModelForMultipleChoice
 import torch
 
 st.set_page_config(page_title="D&G PROJECT MCQ SOLVER",layout="centered")
-MODEL_PATH='models/Electra-best-model/Electra-best-model/electra-base-checkpoint500'
+MODEL_ID="24f2002314/electra-mcq-solver"
 LABELS=["Option A","Option B","Option C","Option D","Option E"]
 
 @st.cache_resource
 def load_model():
-    model=AutoModelForMultipleChoice.from_pretrained(MODEL_PATH)
+    model=AutoModelForMultipleChoice.from_pretrained(MODEL_ID)
     tokenizer=AutoTokenizer.from_pretrained('google/electra-base-discriminator')
     model.eval()
     return tokenizer,model
