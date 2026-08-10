@@ -48,7 +48,7 @@ D&G-Project/
 #### Deployment
 
 Deployment done via Streamlit.
-link: 
+link: https://dl-genai-project-pjvbatcpgcnvfhefclxhqv.streamlit.app/
 ---
 
 ## Technologies
