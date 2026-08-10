@@ -6,18 +6,20 @@ if os.path.exists('/mount/src'):
     repo = "/mount/src/dl-24f2002314-notebook-t22026"
     subprocess.run(["curl","-sL","https://github.com/git-lfs/git-lfs/releases/download/v3.6.1/git-lfs-linux-amd64-v3.6.1.tar.gz","-o","/tmp/git-lfs.tar.gz"])
     subprocess.run(["tar","-xzf","/tmp/git-lfs.tar.gz","-C","/tmp/"])
-    r=subprocess.run(["find","/tmp","-name","git-lfs","-type","f"],capture_output=True,text=True)
-    print("Found git-lfs at:",r.stdout)
-    lfs_path=r.stdout.strip().split('\n')[0] if r.stdout.strip() else ""
-    if lfs_path:
-        subprocess.run(["cp",lfs_path,"/home/adminuser/venv/bin/git-lfs"])
-        subprocess.run(["chmod","+x","/home/adminuser/venv/bin/git-lfs"])
-        subprocess.run(["git","lfs","install","--local"],cwd=repo)
-        subprocess.run(["git","lfs","pull"],cwd=repo)
-        print("LFS pull done!")
-    else:
-        print("ERROR: git-lfs binary not found")
+    
+    # Add git-lfs to PATH
+    os.environ["PATH"] = "/tmp/git-lfs-3.6.1:" + os.environ["PATH"]
+    
+    # Verify it works
+    r=subprocess.run(["git","lfs","version"],capture_output=True,text=True)
+    print("git lfs version:",r.stdout,r.stderr)
+    
+    # Now pull
+    subprocess.run(["git","lfs","install","--local"],cwd=repo)
+    r2=subprocess.run(["git","lfs","pull"],cwd=repo,capture_output=True,text=True)
+    print("git lfs pull:",r2.returncode,r2.stdout[-200:] if r2.stdout else "",r2.stderr[-200:] if r2.stderr else "")
     sys.stdout.flush()
+
 
 import streamlit as st
 from transformers import AutoTokenizer, AutoModelForMultipleChoice
