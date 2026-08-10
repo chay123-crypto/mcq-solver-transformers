@@ -2,6 +2,9 @@ import os
 import subprocess
 
 if os.path.exists('/mount/src'):
+    subprocess.run(["curl", "-s", "https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh", "-o", "/tmp/lfs.sh"], capture_output=True)
+    subprocess.run(["bash", "/tmp/lfs.sh"], capture_output=True)
+    subprocess.run(["apt-get", "install", "-y", "git-lfs"], capture_output=True)
     subprocess.run(["git", "lfs", "install"], cwd="/mount/src/dl-24f2002314-notebook-t22026")
     subprocess.run(["git", "lfs", "pull"], cwd="/mount/src/dl-24f2002314-notebook-t22026")
 
