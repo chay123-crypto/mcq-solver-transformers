@@ -29,7 +29,7 @@ D&G-Project/
 │
 ├── 
 │
-├── DL-24f2002314-notebook-t22026.ipynb
+├── training.ipynb
 │
 |── app.py
 │
