@@ -50,7 +50,7 @@ Local validation results (80/20 split):
 | TF-IDF similarity | 0.532 | 0.353 |
 | Word2Vec similarity | 0.374 | 0.210 |
 | Custom ANN | 0.916 | 0.868 |
-| RoBERTa-base | 0.433 | 0.433 |
+| RoBERTa-base |1.000 | 0.988 |
 | **ELECTRA-base** | **1.000** | **1.000** |
 
 > ⚠️ **Note:** the ELECTRA validation score is likely inflated because the augmented training set contains duplicated prompts. The held-out leaderboard score (**0.76101 MAP@3**) is the more reliable figure.
