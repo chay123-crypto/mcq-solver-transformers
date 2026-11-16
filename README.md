@@ -93,6 +93,5 @@ Built as the Deep Learning & Generative AI project for the **IIT Madras BS in Da
 ## 👤 Author
 
 **Sai Chaithanyia**
-[GitHub](https://github.com/<your-username>) · [LinkedIn](https://linkedin.com/in/<your-handle>)
 
 ---
